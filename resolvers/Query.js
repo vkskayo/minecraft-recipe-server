@@ -1,4 +1,4 @@
-import { recipes, items } from "../db.js";
+import { recipes, items, foods } from "../db.js";
 import mcAssetss from "minecraft-assets";
 import * as dotenv from "dotenv";
 dotenv.config();
@@ -56,5 +56,32 @@ export const Query = {
       });
 
     return inShapeArr;
+  },
+  getFoods: (parent, args, context) => {
+    return foods.map((food) => {
+      return {
+        id: food.id,
+        foodImage: mcAssets.textureContent[items[food.id - 1].name].texture,
+        name: food.name,
+        displayName: food.displayName,
+        foodPoints: food.foodPoints,
+      };
+    });
+  },
+
+  getSubsetFoods: (parent, { name }, context) => {
+    const subset = foods.map((food) => {
+      if (food.name.toLowerCase().includes(name.toLowerCase())) {
+        return {
+          id: food.id,
+          foodImage: mcAssets.textureContent[items[food.id - 1].name].texture,
+          name: food.name,
+          displayName: food.displayName,
+          foodPoints: food.foodPoints,
+        };
+      }
+    });
+    const filteredSubset = subset.filter((food) => food);
+    return filteredSubset;
   },
 };

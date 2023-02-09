@@ -7,3 +7,6 @@ const mcData = minecraftData(process.env.MINECRAFT_VERSION || "1.18");
 
 export const recipes = Object.values(mcData.recipes);
 export const items = Object.values(mcData.items);
+export const foods = Object.values(mcData.foodsByName);
+
+console.log(foods);
